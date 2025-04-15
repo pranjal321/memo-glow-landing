@@ -2,17 +2,8 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/58681c44-f7d2-4216-ad49-59c4c7b5ff57
+**URL**: https://memo-glow-landing.lovable.app/
 
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/58681c44-f7d2-4216-ad49-59c4c7b5ff57) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
 
 **Use your preferred IDE**
 
@@ -35,20 +26,9 @@ npm i
 # Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
+## Workflow
+![15 04 2025_07 06 12_REC](https://github.com/user-attachments/assets/efe07a80-23ae-4e8b-9373-973553f6768b)
 
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
 
 ## What technologies are used for this project?
 
@@ -59,15 +39,55 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- Next.js
+- supabase
+- vercel
 
 ## How can I deploy this project?
+✅ Deployment Steps
+1. Finalize Your Project Locally
+Make sure your project has:
+A fully responsive, animated one-page layout using Next.js and Tailwind CSS
+Optional backend features: contact form (via Express or Supabase), waitlist, testimonials, etc.
+Fully working on desktop and mobile
+2. Prepare for Deployment
+Ensure you’ve committed all code to a GitHub repo
+If using environment variables (e.g., Supabase keys), store them in .env.local
+3. Deploy on Vercel
+Vercel is the recommended platform for deploying Next.js apps.
+Steps:
+Go to https://vercel.com
+Sign in with GitHub and import your project
+Set environment variables if needed (Settings > Environment Variables)
+Hit Deploy
+Done 🎉 Your site will be live on a *.vercel.app domain.
 
-Simply open [Lovable](https://lovable.dev/projects/58681c44-f7d2-4216-ad49-59c4c7b5ff57) and click on Share -> Publish.
+🚀 Bonus: Backend Deployment (if using Express)
+If you choose Node.js Express instead of Supabase for backend:
+You can’t deploy Express on Vercel directly (Vercel is frontend-focused)
+Instead, use:
+Render
+Railway
+Fly.io
+Or host it on Supabase Edge Functions (if using Supabase)
+If you go the full-stack route:
+Deploy frontend on Vercel
+Deploy backend on Render/Railway
+Make sure CORS and API routes are configured properly
 
-## Can I connect a custom domain to my Lovable project?
+✅ Post-Deployment Checklist
+ Live link is working on desktop and mobile
+ Animations and responsiveness verified
+ Forms tested (and data stored correctly if backend is used)
+ Dark mode toggle (if implemented)
+ GitHub repo is clean and public
 
-Yes, you can!
+## Preview
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+1.![15 04 2025_07 12 39_REC](https://github.com/user-attachments/assets/80d5c03e-4150-4383-9072-9b1c828a6a26)
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+2.![15 04 2025_07 13 16_REC](https://github.com/user-attachments/assets/0ab86857-e5f1-4cf4-9eb6-9e2659fd57ee)
+
+3.![15 04 2025_07 13 49_REC](https://github.com/user-attachments/assets/239b30d3-7f42-401b-9ea6-76fc106e46be)
+
+4.![15 04 2025_07 14 21_REC](https://github.com/user-attachments/assets/474bd901-b6c8-45e8-936f-a23634585239)
