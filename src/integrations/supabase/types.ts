@@ -27,6 +27,59 @@ export type Database = {
         }
         Relationships: []
       }
+      photos: {
+        Row: {
+          id: string
+          photo_url: string
+          uploaded_at: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          photo_url: string
+          uploaded_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          photo_url?: string
+          uploaded_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      votes: {
+        Row: {
+          id: string
+          photo_id: string
+          user_id: string
+          vote_type: string
+          voted_at: string
+        }
+        Insert: {
+          id?: string
+          photo_id: string
+          user_id: string
+          vote_type: string
+          voted_at?: string
+        }
+        Update: {
+          id?: string
+          photo_id?: string
+          user_id?: string
+          vote_type?: string
+          voted_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "votes_photo_id_fkey"
+            columns: ["photo_id"]
+            isOneToOne: false
+            referencedRelation: "photos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

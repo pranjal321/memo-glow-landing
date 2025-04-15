@@ -1,111 +1,109 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Menu, X } from "lucide-react";
 
-const Navbar: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+export default function Navbar() {
+  const { user, signOut } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  
+  const handleSignOut = async () => {
+    await signOut();
     setIsMenuOpen(false);
   };
-
+  
+  const getInitials = (email: string) => {
+    return email.charAt(0).toUpperCase();
+  };
+  
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-md py-2" : "bg-transparent py-4"
-      }`}
-    >
-      <div className="container mx-auto px-4 flex items-center justify-between">
-        <div className="flex items-center">
-          <span className="text-xl font-bold text-memotag-purple">MemoTag</span>
-        </div>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
-          <a
-            onClick={() => scrollToSection("problem")}
-            className="text-gray-700 hover:text-memotag-purple cursor-pointer transition-colors"
-          >
-            Problem
-          </a>
-          <a
-            onClick={() => scrollToSection("solution")}
-            className="text-gray-700 hover:text-memotag-purple cursor-pointer transition-colors"
-          >
-            Solution
-          </a>
-          <a
-            onClick={() => scrollToSection("traction")}
-            className="text-gray-700 hover:text-memotag-purple cursor-pointer transition-colors"
-          >
-            Traction
-          </a>
-          <Button 
-            onClick={() => scrollToSection("cta")}
-            className="bg-memotag-purple hover:bg-memotag-darkPurple text-white"
-          >
-            Get Started
-          </Button>
-        </nav>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-gray-700 focus:outline-none"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 py-4">
-          <div className="container mx-auto px-4 flex flex-col space-y-4">
-            <a
-              onClick={() => scrollToSection("problem")}
-              className="text-gray-700 hover:text-memotag-purple cursor-pointer transition-colors py-2"
-            >
-              Problem
-            </a>
-            <a
-              onClick={() => scrollToSection("solution")}
-              className="text-gray-700 hover:text-memotag-purple cursor-pointer transition-colors py-2"
-            >
-              Solution
-            </a>
-            <a
-              onClick={() => scrollToSection("traction")}
-              className="text-gray-700 hover:text-memotag-purple cursor-pointer transition-colors py-2"
-            >
-              Traction
-            </a>
-            <Button 
-              onClick={() => scrollToSection("cta")}
-              className="bg-memotag-purple hover:bg-memotag-darkPurple text-white w-full"
-            >
-              Get Started
+    <nav className="bg-white shadow-sm sticky top-0 z-10">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center">
+            <Link to="/" className="text-xl font-bold text-memotag-purple">
+              PhotoShare
+            </Link>
+          </div>
+          
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Link to="/" className="text-gray-600 hover:text-memotag-purple transition-colors">
+              Home
+            </Link>
+            <Link to="/photos" className="text-gray-600 hover:text-memotag-purple transition-colors">
+              Photos
+            </Link>
+            
+            {user ? (
+              <div className="flex items-center space-x-4">
+                <Avatar className="h-8 w-8 bg-memotag-purple text-white">
+                  <AvatarFallback>{getInitials(user.email || "")}</AvatarFallback>
+                </Avatar>
+                <Button variant="ghost" onClick={handleSignOut}>
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <Link to="/auth">
+                <Button>Sign In</Button>
+              </Link>
+            )}
+          </div>
+          
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <Button variant="ghost" onClick={toggleMenu}>
+              {isMenuOpen ? <X /> : <Menu />}
             </Button>
           </div>
         </div>
-      )}
-    </header>
+        
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden py-4 border-t">
+            <div className="flex flex-col space-y-4">
+              <Link to="/" 
+                className="text-gray-600 hover:text-memotag-purple transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Home
+              </Link>
+              <Link to="/photos" 
+                className="text-gray-600 hover:text-memotag-purple transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Photos
+              </Link>
+              
+              {user ? (
+                <div className="flex items-center justify-between pt-4 border-t">
+                  <div className="flex items-center space-x-2">
+                    <Avatar className="h-8 w-8 bg-memotag-purple text-white">
+                      <AvatarFallback>{getInitials(user.email || "")}</AvatarFallback>
+                    </Avatar>
+                    <span className="text-sm text-gray-600">{user.email}</span>
+                  </div>
+                  <Button variant="outline" onClick={handleSignOut}>
+                    Sign Out
+                  </Button>
+                </div>
+              ) : (
+                <Link to="/auth" onClick={() => setIsMenuOpen(false)}>
+                  <Button>Sign In</Button>
+                </Link>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
   );
-};
-
-export default Navbar;
+}
